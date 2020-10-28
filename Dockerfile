@@ -1,6 +1,6 @@
 FROM node:10
-WORKDIR /frontend
-COPY ./package.json ./
+WORKDIR /
+COPY package.json .
 RUN yarn install
 COPY . .
 EXPOSE 3000
