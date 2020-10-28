@@ -1,0 +1,52 @@
+version: "3.8"
+services:
+    frontend:
+        image: purehappiness/final-project-master_frontend
+        # build: 
+        #     dockerfile: Dockerfile
+        #     context: ./frontend
+        restart: always
+        tty: true
+        # stdin_open: true
+        ports:
+            - "3000:3000"
+        volumes:
+            - C:\Users\gorodilova.ma\Documents\projects\gorodilova\final-project-master\frontend
+            # - ./frontend:/frontend
+            # - /frontend/node_modules
+        links:
+            - backend
+        networks:
+            [webappnetwork]
+    backend:
+        image: purehappiness/final-project-master_backend
+        # build: 
+        #     dockerfile: Dockerfile
+        #     context: ./backend
+        restart: always
+        ports:
+            - 8080:8080
+        volumes:
+            - C:\Users\gorodilova.ma\Documents\projects\gorodilova\final-project-master\backend
+            # - .:/backend
+            # - /backend/node_modules
+        depends_on:
+            - mongodb
+        networks:
+            [webappnetwork]
+    mongodb:
+        image: mongo
+        restart: always
+        tty: true
+        container_name: mongodb
+        volumes:
+            - C:\Users\gorodilova.ma\Documents\projects\gorodilova\final-project-master\data-node
+        ports:
+            - 27017:27017
+        command: mongod --noauth
+        networks:
+            - webappnetwork
+
+networks:
+    webappnetwork:
+        driver: bridge
